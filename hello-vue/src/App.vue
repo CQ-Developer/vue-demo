@@ -6,11 +6,7 @@
     <!-- <input v-bind:value='message' v-on:input='handleInput'> -->
     <input :value='message' @input='handleInput'>
     <todo-list>
-      <todo-item v-for='item in list'
-                v-bind:key='item.title'
-                v-bind:title='item.title'
-                v-bind:del='item.del'
-                v-on:delete='handleDelete'>
+      <todo-item v-for='item in list' :key='item.title' :title='item.title' :del='item.del' @delete='handleDelete'>
         <template v-slot:pre-icon='{value}'>
           <span>前置图标:{{value}}</span>
         </template>
