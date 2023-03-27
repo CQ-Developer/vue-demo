@@ -17,14 +17,21 @@
     <div v-bind:id="message"></div>
 
     <todo-list>
-      <todo-item v-for="item in list" v-bind:title="item.title" v-bind:del="item.del" v-on:delete="handleDelete">
-        <template v-slot:pre-icon>
-          <span>前置图标</span>
-        </template>
-        <template v-slot:suf-icon>
-          <span>后置图标</span>
-        </template>
-      </todo-item>
+      <!--
+        这种不带名称的插槽叫做[默认插槽]，
+        可以省略掉
+      -->
+      <template>
+        <todo-item v-for="item in list" v-bind:title="item.title" v-bind:del="item.del" v-on:delete="handleDelete">
+          <!-- 这种带名称的插槽叫做[具名插槽] -->
+          <template v-slot:pre-icon>
+            <span>前置图标</span>
+          </template>
+          <template v-slot:suf-icon>
+            <span>后置图标</span>
+          </template>
+        </todo-item>
+      </template>
     </todo-list>
   </div>
   <script src="https://cdn.jsdelivr.net/npm/vue@2.7.14/dist/vue.js"></script>
