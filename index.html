@@ -11,43 +11,60 @@
 <body>
   <div id="app">
     <!-- 中括号可以直接引用对应的数据，也可以执行表达式 -->
-    {{message + message}}
+    {{message}}
 
     <!-- id的实际值会变成hello world -->
     <div v-bind:id="message"></div>
 
-    <ul>
-      <!--
-        v-for :循环的渲染标签
-      -->
-      <li v-for="item in list">
-        <!--
-          v-if :可以控制表示是否显示
-          可以在html中使用 v-if 和 v-else 进行判断
-        -->
-        <span v-if="!item.del">{{item.title}}</span>
-        <span v-else style="text-decoration: line-through;">{{item.title}}</span>
-        <!--
-          v-show :控制表是否显示，标签实际上已经加载了，只是没有显示
-        -->
-        <button v-show="!item.del">删除</button>
-      </li>
-    </ul>
+    <todo-list></todo-list>
   </div>
   <script src="https://cdn.jsdelivr.net/npm/vue@2.7.14/dist/vue.js"></script>
   <script>
     Vue.component("todo-item", {
+      props: {
+        title: String,
+        del: {
+          type: Boolean,
+          default: false
+        }
+      },
       template: `
-      <li v-for="item in list">
-        <span v-if="!item.del">{{item.title}}</span>
-        <span v-else style="text-decoration: line-through;">{{item.title}}</span>
-        <button v-show="!item.del">删除</button>
-      </li>
+        <li>
+          <span v-if="del">{{title}}</span>
+          <span v-else style="text-decoration: line-through;">{{title}}</span>
+          <button v-show="del">删除</button>
+        </li>
       `,
       data: function () {
         return {}
       },
       method: {}
+    });
+
+    Vue.component("todo-list", {
+      template: `
+        <ul>
+          <todo-item v-for="item in list" v-bind:title="item.title" v-bind:del="item.del"></todo-item>
+        </ul>
+      `,
+      data: function () {
+        return {
+          list: [
+            {
+              title: "课程一",
+              del: false
+            },
+            {
+              title: "课程二",
+              del: true
+            },
+            {
+              title: "课程三",
+              del: false
+            }
+          ]
+        }
+      }
     });
 
     var vm = new Vue({
