@@ -32,19 +32,24 @@
         <li>
           <span v-if="del">{{title}}</span>
           <span v-else style="text-decoration: line-through;">{{title}}</span>
-          <button v-show="del">删除</button>
+          <button v-show="del" v-on:click="handleClick">删除</button>
         </li>
       `,
       data: function () {
         return {}
       },
-      method: {}
+      methods: {
+        handleClick() {
+          console.log("点击了删除按钮");
+          this.$emit("delete", this.title);
+        }
+      }
     });
 
     Vue.component("todo-list", {
       template: `
         <ul>
-          <todo-item v-for="item in list" v-bind:title="item.title" v-bind:del="item.del"></todo-item>
+          <todo-item v-for="item in list" v-bind:title="item.title" v-bind:del="item.del" v-on:delete="handleDelete"></todo-item>
         </ul>
       `,
       data: function () {
@@ -63,6 +68,11 @@
               del: false
             }
           ]
+        }
+      },
+      methods: {
+        handleDelete(title) {
+          console.log("处理删除事件:", title);
         }
       }
     });
