@@ -1,10 +1,10 @@
 <template>
   <li>
     <slot name="pre-icon" v-bind:value="value"></slot>
-    <span v-if="del">{{ title }}</span>
+    <span v-if="!del">{{ title }}</span>
     <span v-else style="text-decoration: line-through;">{{ title }}</span>
     <slot name="suf-icon">默认图标</slot>
-    <button v-show="del" v-on:click="handleClick">删除</button>
+    <button v-show="!del" v-on:click="handleClick">删除</button>
   </li>
 </template>
 
