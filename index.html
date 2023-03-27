@@ -18,8 +18,12 @@
 
     <todo-list>
       <todo-item v-for="item in list" v-bind:title="item.title" v-bind:del="item.del" v-on:delete="handleDelete">
-        <span slot="pre-icon">前置图标</span>
-        <span slot="suf-icon">后置图标</span>
+        <template v-slot:pre-icon>
+          <span>前置图标</span>
+        </template>
+        <template v-slot:suf-icon>
+          <span>后置图标</span>
+        </template>
       </todo-item>
     </todo-list>
   </div>
