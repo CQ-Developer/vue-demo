@@ -16,7 +16,12 @@
     <!-- id的实际值会变成hello world -->
     <div v-bind:id="message"></div>
 
-    <todo-list></todo-list>
+    <todo-list>
+      <todo-item v-for="item in list" v-bind:title="item.title" v-bind:del="item.del" v-on:delete="handleDelete">
+        <span slot="pre-icon">前置图标</span>
+        <span slot="suf-icon">后置图标</span>
+      </todo-item>
+    </todo-list>
   </div>
   <script src="https://cdn.jsdelivr.net/npm/vue@2.7.14/dist/vue.js"></script>
   <script>
@@ -30,8 +35,10 @@
       },
       template: `
         <li>
+          <slot name="pre-icon"></slot>
           <span v-if="del">{{title}}</span>
           <span v-else style="text-decoration: line-through;">{{title}}</span>
+          <slot name="suf-icon"></slot>
           <button v-show="del" v-on:click="handleClick">删除</button>
         </li>
       `,
@@ -49,31 +56,11 @@
     Vue.component("todo-list", {
       template: `
         <ul>
-          <todo-item v-for="item in list" v-bind:title="item.title" v-bind:del="item.del" v-on:delete="handleDelete"></todo-item>
+          <slot></slot>
         </ul>
       `,
       data: function () {
-        return {
-          list: [
-            {
-              title: "课程一",
-              del: false
-            },
-            {
-              title: "课程二",
-              del: true
-            },
-            {
-              title: "课程三",
-              del: false
-            }
-          ]
-        }
-      },
-      methods: {
-        handleDelete(title) {
-          console.log("处理删除事件:", title);
-        }
+        return {}
       }
     });
 
@@ -95,6 +82,11 @@
             del: false
           }
         ]
+      },
+      methods: {
+        handleDelete(title) {
+          console.log("处理删除事件:", title);
+        }
       }
     })
   </script>
